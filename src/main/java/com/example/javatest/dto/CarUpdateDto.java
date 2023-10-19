@@ -1,4 +1,4 @@
-package com.example.javatest.controller;
+package com.example.javatest.dto;
 
 import java.math.BigDecimal;
 

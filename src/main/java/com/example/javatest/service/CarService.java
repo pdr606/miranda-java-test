@@ -1,17 +1,16 @@
 package com.example.javatest.service;
 
-import com.example.javatest.controller.CarUpdateDto;
+import com.example.javatest.dto.CarResponseDto;
+import com.example.javatest.dto.CarUpdateDto;
 import com.example.javatest.dto.CarCreateDto;
 import com.example.javatest.exceptions.CarDuplicateException;
 import com.example.javatest.exceptions.CarNotFoundException;
 import com.example.javatest.model.Car;
 import com.example.javatest.repository.CarRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -35,6 +34,7 @@ public class CarService implements CarGetaway {
         if(!checkIfCarExist(data.chassis())){
             var car = new Car(data);
             carRepository.save(car);
+            return;
         }
         throw new CarDuplicateException(data.chassis());
     }
@@ -45,10 +45,10 @@ public class CarService implements CarGetaway {
     }
 
     @Override
-    public void updateCar(Long id, CarUpdateDto data) {
+    public Car updateCar(Long id, CarUpdateDto data) {
             Car entity = getCarById(id);
             updateData(entity, data);
-            carRepository.save(entity);
+            return carRepository.save(entity);
     }
 
     @Override

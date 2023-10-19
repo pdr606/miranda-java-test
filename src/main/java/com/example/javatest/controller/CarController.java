@@ -1,6 +1,9 @@
 package com.example.javatest.controller;
 
 import com.example.javatest.dto.CarCreateDto;
+import com.example.javatest.dto.CarResponseDto;
+import com.example.javatest.dto.CarUpdateDto;
+import com.example.javatest.mapper.CarMapper;
 import com.example.javatest.model.Car;
 import com.example.javatest.service.CarService;
 import lombok.AllArgsConstructor;
@@ -8,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/cars")
@@ -23,14 +25,14 @@ public class CarController {
          carService.registerCar(data);
     }
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping
-    public void updateCar(@PathVariable Long id, @RequestBody CarUpdateDto data){
-        carService.updateCar(id, data);
+    @PostMapping(value = "/update/{id}")
+    public CarResponseDto updateCar(@PathVariable Long id, @RequestBody CarUpdateDto data){
+        return CarMapper.toResponse(carService.updateCar(id, data));
     }
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/{id}")
-    public Car findCarById(@PathVariable Long id){
-        return carService.getCarById(id);
-            }
+    public CarResponseDto findCarById(@PathVariable Long id){
+        return CarMapper.toResponse(carService.getCarById(id));
+    }
 
 }
