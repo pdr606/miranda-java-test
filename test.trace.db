@@ -1,0 +1,6 @@
+2023-10-19 09:44:52 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "create table tb_car (id bigint not null, brand varchar(255), chassis varchar(255), created timestamp(6), description varchar(255), price numeric(38,2), sold boolean, updated timestamp(6), [*]year integer, primary key (id))"; expected "identifier"; SQL statement:
+create table tb_car (id bigint not null, brand varchar(255), chassis varchar(255), created timestamp(6), description varchar(255), price numeric(38,2), sold boolean, updated timestamp(6), year integer, primary key (id)) [42001-214]
+2023-10-19 09:46:38 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "TB_CAR" not found (this database is empty); SQL statement:
+insert into tb_car (brand,chassis,created,description,price,sold,updated,year,id) values (?,?,?,?,?,?,?,?,?) [42104-214]
