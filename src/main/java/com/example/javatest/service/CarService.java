@@ -2,6 +2,8 @@ package com.example.javatest.service;
 
 import com.example.javatest.controller.CarUpdateDto;
 import com.example.javatest.dto.CarCreateDto;
+import com.example.javatest.exceptions.CarDuplicateException;
+import com.example.javatest.exceptions.CarNotFoundException;
 import com.example.javatest.model.Car;
 import com.example.javatest.repository.CarRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -22,18 +24,19 @@ public class CarService implements CarGetaway {
     }
 
     @Override
-    public Optional<Car> getCarById(Long id) {
-        return carRepository.findById(id);
+    public Car getCarById(Long id) {
+        return carRepository.findById(id).orElseThrow(()
+        -> new CarNotFoundException(id));
     }
 
 
     @Override
-    public void createCar(CarCreateDto data) {
+    public void registerCar(CarCreateDto data) {
         if(!checkIfCarExist(data.chassis())){
             var car = new Car(data);
             carRepository.save(car);
         }
-        throw new RuntimeException();
+        throw new CarDuplicateException(data.chassis());
     }
 
     @Override
@@ -43,13 +46,9 @@ public class CarService implements CarGetaway {
 
     @Override
     public void updateCar(Long id, CarUpdateDto data) {
-        try{
-            Optional<Car> entity = getCarById(id);
+            Car entity = getCarById(id);
             updateData(entity, data);
-            carRepository.save(entity.get());
-        } catch (EntityNotFoundException ex){
-            throw new RuntimeException();
-        }
+            carRepository.save(entity);
     }
 
     @Override
@@ -58,9 +57,9 @@ public class CarService implements CarGetaway {
     }
 
     @Override
-    public void updateData(Optional<Car> entity, CarUpdateDto data) {
-        entity.get().setDescription(data.description());
-        entity.get().setSold(data.sold());
-        entity.get().setPrice(data.price());
+    public void updateData(Car entity, CarUpdateDto data) {
+        entity.setDescription(data.description());
+        entity.setSold(data.sold());
+        entity.setPrice(data.price());
     }
 }

@@ -10,10 +10,10 @@ import java.util.Optional;
 public interface CarGetaway {
 
     List<Car> getAllCars();
-    Optional<Car> getCarById(Long id);
-    void createCar(CarCreateDto data);
+    Car getCarById(Long id);
+    void registerCar(CarCreateDto data);
     boolean checkIfCarExist(String chassis);
     void updateCar(Long id, CarUpdateDto data);
     void deleteCar(Long id);
-    void updateData(Optional<Car> entity, CarUpdateDto data);
+    void updateData(Car entity, CarUpdateDto data);
 }

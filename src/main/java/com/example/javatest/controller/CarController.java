@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Optional;
 
 @RestController
@@ -16,16 +17,20 @@ public class CarController {
 
     private final CarService carService;
 
-
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public void create(@RequestBody CarCreateDto data){
-         carService.create(data);
+    public void registerCar(@RequestBody @Valid CarCreateDto data){
+         carService.registerCar(data);
     }
-
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping
+    public void updateCar(@PathVariable Long id, @RequestBody CarUpdateDto data){
+        carService.updateCar(id, data);
+    }
+    @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/{id}")
-    public Optional<Car> findById(@PathVariable Long id){
-        return carService.findById(id);
+    public Car findCarById(@PathVariable Long id){
+        return carService.getCarById(id);
             }
 
 }
