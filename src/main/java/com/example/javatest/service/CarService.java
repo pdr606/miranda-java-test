@@ -8,6 +8,8 @@ import com.example.javatest.exceptions.CarNotFoundException;
 import com.example.javatest.model.Car;
 import com.example.javatest.repository.CarRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,16 +20,16 @@ public class CarService implements CarGetaway {
 
     private final CarRepository carRepository;
     @Override
-    public List<Car> getAllCars() {
-        return carRepository.findAll();
+    public Page<Car> getAllCars(Pageable pageable) {
+        return carRepository.findAll(pageable);
     }
+
 
     @Override
     public Car getCarById(Long id) {
         return carRepository.findById(id).orElseThrow(()
         -> new CarNotFoundException(id));
     }
-
 
     @Override
     public void registerCar(CarCreateDto data) {
@@ -53,7 +55,9 @@ public class CarService implements CarGetaway {
 
     @Override
     public void deleteCar(Long id) {
-        carRepository.deleteById(id);
+        if(getCarById(id) != null){
+            carRepository.deleteById(id);
+        }
     }
 
     @Override

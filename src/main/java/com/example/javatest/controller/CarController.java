@@ -7,10 +7,12 @@ import com.example.javatest.mapper.CarMapper;
 import com.example.javatest.model.Car;
 import com.example.javatest.service.CarService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/cars")
@@ -19,14 +21,20 @@ public class CarController {
 
     private final CarService carService;
 
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<Car> findAllCars(@Valid  Pageable pageable){
+        return carService.getAllCars(pageable).getContent();
+    }
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public void registerCar(@RequestBody @Valid CarCreateDto data){
          carService.registerCar(data);
     }
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping(value = "/update/{id}")
-    public CarResponseDto updateCar(@PathVariable Long id, @RequestBody CarUpdateDto data){
+    @PutMapping(value = "/{id}")
+    public CarResponseDto updateCar(@PathVariable Long id, @RequestBody @Valid CarUpdateDto data){
         return CarMapper.toResponse(carService.updateCar(id, data));
     }
     @ResponseStatus(HttpStatus.OK)
@@ -35,4 +43,9 @@ public class CarController {
         return CarMapper.toResponse(carService.getCarById(id));
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @DeleteMapping
+    public void deleteCar(@PathVariable Long id){
+        carService.deleteCar(id);
+    }
 }
