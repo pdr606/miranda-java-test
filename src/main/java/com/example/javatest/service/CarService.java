@@ -17,19 +17,19 @@ public class CarService implements CarGetaway {
 
     private final CarRepository carRepository;
     @Override
-    public List<Car> findAll() {
+    public List<Car> getAllCars() {
         return carRepository.findAll();
     }
 
     @Override
-    public Optional<Car> findById(Long id) {
+    public Optional<Car> getCarById(Long id) {
         return carRepository.findById(id);
     }
 
 
     @Override
-    public void create(CarCreateDto data) {
-        if(!carExist(data.chassis())){
+    public void createCar(CarCreateDto data) {
+        if(!checkIfCarExist(data.chassis())){
             var car = new Car(data);
             carRepository.save(car);
         }
@@ -37,14 +37,14 @@ public class CarService implements CarGetaway {
     }
 
     @Override
-    public boolean carExist(String chassis) {
+    public boolean checkIfCarExist(String chassis) {
         return carRepository.existsByChassis(chassis);
     }
 
     @Override
-    public void update(Long id, CarUpdateDto data) {
+    public void updateCar(Long id, CarUpdateDto data) {
         try{
-            Optional<Car> entity = findById(id);
+            Optional<Car> entity = getCarById(id);
             updateData(entity, data);
             carRepository.save(entity.get());
         } catch (EntityNotFoundException ex){
@@ -53,9 +53,8 @@ public class CarService implements CarGetaway {
     }
 
     @Override
-    public void delete(Long id) {
+    public void deleteCar(Long id) {
         carRepository.deleteById(id);
-
     }
 
     @Override
@@ -63,6 +62,5 @@ public class CarService implements CarGetaway {
         entity.get().setDescription(data.description());
         entity.get().setSold(data.sold());
         entity.get().setPrice(data.price());
-
     }
 }
