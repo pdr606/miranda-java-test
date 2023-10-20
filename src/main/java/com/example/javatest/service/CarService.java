@@ -7,6 +7,7 @@ import com.example.javatest.exceptions.CarDuplicateException;
 import com.example.javatest.exceptions.CarNotFoundException;
 import com.example.javatest.model.Car;
 import com.example.javatest.repository.CarRepository;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -36,7 +37,7 @@ public class CarService implements CarGetaway {
     }
 
     @Override
-    public void registerCar(CarCreateDto data) {
+    public void registerCar(@Valid CarCreateDto data) {
         if(checkIfCarExist(data.chassis())){
             throw  new CarDuplicateException(data.chassis());
         }

@@ -5,12 +5,16 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 @Data
 @Entity
@@ -18,25 +22,28 @@ import java.time.LocalDateTime;
 public class Car {
 
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NotEmpty
+    @Column(name = "vehicle", nullable = false)
     private String vehicle;
-    @NotEmpty
+    @Column(name = "brand", nullable = false)
     private String brand;
-    @NotNull
-    @Column(name = "FABRICATION_YEAR")
+    @Column(name = "fabrication_year", nullable = false)
     private Integer year;
-    @NotEmpty
+    @Column(name = "description", nullable = false)
     private String description;
-    @NotNull
+    @Column(name = "sold", insertable = true)
     private boolean sold;
+    @CreatedDate
+    @Column(name = "created_at")
     private LocalDateTime created;
+    @LastModifiedDate
+    @Column(name = "updated_at")
     private LocalDateTime updated;
-    @NotEmpty
-    @Column(name = "chassis", unique = true)
+    @Column(name = "chassis", unique = true, nullable = false)
     private String chassis;
-    @NotNull
+    @Column(name = "price", nullable = false)
     private BigDecimal price;
 
     public Car(CarCreateDto data) {

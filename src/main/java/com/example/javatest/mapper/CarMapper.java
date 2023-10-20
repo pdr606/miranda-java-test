@@ -4,7 +4,7 @@ import com.example.javatest.dto.CarResponseDto;
 import com.example.javatest.model.Car;
 
 public class CarMapper {
-    public static CarResponseDto toResponse(Car data){
+    public  CarResponseDto toResponse(Car data){
         return new CarResponseDto(
                 data.getId(),
                 data.getBrand(),
