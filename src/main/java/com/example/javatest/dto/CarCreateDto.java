@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 @Builder
 public record CarCreateDto(
-                            @NotEmpty(message = "Vehicle is required")
+                            @NotNull(message = "Vehicle is required")
                             String vehicle,
                             @NotEmpty(message = "Brand is required")
                             String brand,
