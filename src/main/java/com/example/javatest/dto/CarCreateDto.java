@@ -2,10 +2,11 @@ package com.example.javatest.dto;
 
 import java.math.BigDecimal;
 
-public record CarCreateDto(String brand,
+public record CarCreateDto(
+                            String vehicle,
+                            String brand,
                            Integer year,
                            String description,
-                           Boolean sold,
                            String chassis,
                            BigDecimal price) {
 }

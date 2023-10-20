@@ -21,6 +21,8 @@ public class Car {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotEmpty
+    private String vehicle;
+    @NotEmpty
     private String brand;
     @NotNull
     @Column(name = "FABRICATION_YEAR")
@@ -28,7 +30,7 @@ public class Car {
     @NotEmpty
     private String description;
     @NotNull
-    private Boolean sold;
+    private boolean sold;
     private LocalDateTime created;
     private LocalDateTime updated;
     @NotEmpty
@@ -37,17 +39,19 @@ public class Car {
     private BigDecimal price;
 
     public Car(CarCreateDto data) {
+        this.vehicle = data.vehicle();
         this.brand = data.brand();
         this.year = data.year();
         this.description = data.description();
-        this.sold = true;
         this.created = LocalDateTime.now();
         this.updated = LocalDateTime.now();
         this.chassis = data.chassis();
         this.price = data.price();
+        this.sold = true;
     }
     @PreUpdate
     private void setUpdated(){
         this.updated = LocalDateTime.now();
     }
+
 }

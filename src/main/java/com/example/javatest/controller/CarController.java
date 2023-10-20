@@ -7,7 +7,10 @@ import com.example.javatest.mapper.CarMapper;
 import com.example.javatest.model.Car;
 import com.example.javatest.service.CarService;
 import lombok.AllArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,8 +26,13 @@ public class CarController {
 
 
     @GetMapping
+    @Cacheable("cars")
     @ResponseStatus(HttpStatus.OK)
-    public List<Car> findAllCars(@Valid  Pageable pageable){
+    public List<Car> findAllCars(@PageableDefault(
+            direction = Sort.Direction.ASC,
+            page = 0,
+            size = 10
+    ) @Valid  Pageable pageable){
         return carService.getAllCars(pageable).getContent();
     }
     @ResponseStatus(HttpStatus.CREATED)

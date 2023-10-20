@@ -12,7 +12,7 @@ public record CarResponseDto(
         String brand,
         Integer year,
         String description,
-        Boolean sold,
+        boolean sold,
         LocalDateTime created,
         LocalDateTime updated,
         BigDecimal price

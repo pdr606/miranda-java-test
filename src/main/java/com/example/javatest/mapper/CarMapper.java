@@ -10,7 +10,7 @@ public class CarMapper {
                 data.getBrand(),
                 data.getYear(),
                 data.getDescription(),
-                data.getSold(),
+                data.isSold(),
                 data.getCreated(),
                 data.getUpdated(),
                 data.getPrice()
