@@ -25,24 +25,33 @@ public class Car {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
     @Column(name = "vehicle", nullable = false)
     private String vehicle;
+
     @Column(name = "brand", nullable = false)
     private String brand;
+
     @Column(name = "fabrication_year", nullable = false)
     private Integer year;
+
     @Column(name = "description", nullable = false)
     private String description;
+
     @Column(name = "sold", insertable = true)
     private boolean sold;
+
     @CreatedDate
     @Column(name = "created_at")
     private LocalDateTime created;
+
     @LastModifiedDate
     @Column(name = "updated_at")
     private LocalDateTime updated;
+
     @Column(name = "chassis", unique = true, nullable = false)
     private String chassis;
+
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
@@ -61,5 +70,4 @@ public class Car {
     private void setUpdated(){
         this.updated = LocalDateTime.now();
     }
-
 }

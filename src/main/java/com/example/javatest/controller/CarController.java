@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,10 +29,10 @@ public class CarController {
     @Cacheable("cars")
     @ResponseStatus(HttpStatus.OK)
     public List<Car> findAllCars(@PageableDefault(
-            direction = Sort.Direction.ASC,
-            page = 0,
-            size = 10
-    ) @Valid Pageable pageable){
+                                direction = Sort.Direction.ASC,
+                                page = 0,
+                                size = 10
+                                )@Valid Pageable pageable){
         return carService.getAllCars(pageable).getContent();
     }
     @ResponseStatus(HttpStatus.CREATED)
