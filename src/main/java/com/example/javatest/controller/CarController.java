@@ -36,7 +36,7 @@ public class CarController {
     }
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public void registerCar(@javax.validation.Valid @RequestBody CarCreateDto data){
+    public void registerCar(@Valid @RequestBody CarCreateDto data){
          carService.registerCar(data);
     }
     @ResponseStatus(HttpStatus.OK)
