@@ -37,14 +37,10 @@ public class CarService implements CarGetaway {
 
     @Override
     public void registerCar(CarCreateDto data) {
-        try{
-            if(!checkIfCarExist(data.chassis())){
-                var car = new Car(data);
-                carRepository.save(car);
-            }
-        } catch (DataIntegrityViolationException ex){
-            throw new CarDuplicateException(data.chassis());
+        if(checkIfCarExist(data.chassis())){
+            throw  new CarDuplicateException(data.chassis());
         }
+        carRepository.save(new Car(data));
     }
 
     @Override

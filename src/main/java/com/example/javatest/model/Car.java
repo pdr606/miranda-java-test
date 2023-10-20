@@ -34,6 +34,7 @@ public class Car {
     private LocalDateTime created;
     private LocalDateTime updated;
     @NotEmpty
+    @Column(name = "chassis", unique = true)
     private String chassis;
     @NotNull
     private BigDecimal price;
