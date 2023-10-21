@@ -3,6 +3,7 @@ package com.example.javatest.exceptions.global;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.Instant;
+import java.util.List;
 
 public record StandardError(
                             @JsonFormat(shape = JsonFormat.Shape.STRING,
@@ -10,7 +11,7 @@ public record StandardError(
                                     timezone = "GMT")
                             Instant timestamp,
                             Integer status,
-                            String error,
+                            List<String> error,
                             String message,
                             String path) {
 }

@@ -18,6 +18,7 @@ public record CarCreateDto(
                            String description,
                            @NotEmpty(message = "Chassis is required")
                            String chassis,
+                           @NotNull(message = "Price is required ")
                            @Range(min = 0, message = "Price must be greater than zero")
                            BigDecimal price) {
 }
