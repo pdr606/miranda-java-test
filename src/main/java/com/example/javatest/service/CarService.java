@@ -8,6 +8,7 @@ import com.example.javatest.model.Car;
 import com.example.javatest.repository.CarRepository;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -35,16 +36,13 @@ public class CarService implements CarGetaway {
 
     @Override
     public void registerCar(@Valid CarCreateDto data) {
-        if(checkIfCarExist(data.chassis())){
-            throw  new CarDuplicateException(data.chassis());
+        try{
+            carRepository.save(new Car(data));
+        } catch (DataIntegrityViolationException ex){
+            throw new CarDuplicateException(data.chassis());
         }
-        carRepository.save(new Car(data));
     }
 
-    @Override
-    public boolean checkIfCarExist(String chassis) {
-        return carRepository.existsByChassis(chassis);
-    }
 
     @Override
     public Car updateCar(Long id, CarUpdateDto data) {
