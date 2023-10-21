@@ -24,7 +24,6 @@ import java.util.List;
 public class CarController {
 
     private final CarService carService;
-    private final CarMapper carMapper;
     @GetMapping
     @Cacheable("cars")
     @ResponseStatus(HttpStatus.OK)
@@ -43,12 +42,12 @@ public class CarController {
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(value = "/{id}")
     public CarResponseDto updateCar(@PathVariable Long id, @RequestBody CarUpdateDto data){
-        return carMapper.toResponse(carService.updateCar(id, data));
+        return CarMapper.toResponse(carService.updateCar(id, data));
     }
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/{id}")
     public CarResponseDto findCarById(@PathVariable Long id){
-        return carMapper.toResponse(carService.getCarById(id));
+        return CarMapper.toResponse(carService.getCarById(id));
     }
 
     @ResponseStatus(HttpStatus.OK)
