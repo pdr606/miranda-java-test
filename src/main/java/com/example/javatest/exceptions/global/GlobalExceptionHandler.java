@@ -32,6 +32,7 @@ public class GlobalExceptionHandler {
     }
 
 
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public StandardError handleValidationException(MethodArgumentNotValidException ex, HttpServletRequest request){

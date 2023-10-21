@@ -13,9 +13,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/cars")
@@ -33,6 +36,15 @@ public class CarController {
                                 )@Valid Pageable pageable){
         return carService.getAllCars(pageable).getContent();
     }
+
+    @GetMapping(value = "/search")
+    @ResponseStatus(HttpStatus.OK)
+    public List<Car> findCarByParams(@RequestParam(value = "vehicle", required = false) String vehicle,
+                                               @RequestParam(value = "brand", required = false )String brand,
+                                               @RequestParam(value = "price", required = false)BigDecimal price) {
+        return carService.getByParams(vehicle, brand, price);
+    }
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public void registerCar(@Valid @RequestBody CarCreateDto data){

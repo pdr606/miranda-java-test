@@ -6,6 +6,7 @@ import com.example.javatest.exceptions.CarDuplicateException;
 import com.example.javatest.exceptions.CarNotFoundException;
 import com.example.javatest.model.Car;
 import com.example.javatest.repository.CarRepository;
+import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -14,12 +15,22 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 
 @Service
 @AllArgsConstructor
 public class CarService implements CarGetaway {
 
     private final CarRepository carRepository;
+
+    @Override
+    @Nullable
+    public List<Car> getByParams(String vehicle, String brand, BigDecimal price) {
+        return carRepository.findCarsByVehicleAndBrandAndPrice(vehicle, brand, price);
+    }
+
     @Override
     public Page<Car> getAllCars(Pageable pageable) {
         if (pageable.getPageSize() > 10) {
