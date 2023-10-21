@@ -1,6 +1,5 @@
 package com.example.javatest.service;
 
-import com.example.javatest.dto.CarResponseDto;
 import com.example.javatest.dto.CarUpdateDto;
 import com.example.javatest.dto.CarCreateDto;
 import com.example.javatest.exceptions.CarDuplicateException;
@@ -9,13 +8,11 @@ import com.example.javatest.model.Car;
 import com.example.javatest.repository.CarRepository;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 @AllArgsConstructor

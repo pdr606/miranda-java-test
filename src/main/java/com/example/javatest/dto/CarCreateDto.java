@@ -2,7 +2,6 @@ package com.example.javatest.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
 import org.hibernate.validator.constraints.Range;
 
 import java.math.BigDecimal;

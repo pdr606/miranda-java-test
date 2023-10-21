@@ -4,18 +4,12 @@ package com.example.javatest.exceptions.global;
 import com.example.javatest.exceptions.CarDuplicateException;
 import com.example.javatest.exceptions.CarNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.boot.json.JsonParseException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
 import java.time.Instant;
-import java.time.format.DateTimeParseException;
 import java.util.*;
 
 @RestControllerAdvice
