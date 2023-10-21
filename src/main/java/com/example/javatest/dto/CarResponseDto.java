@@ -2,11 +2,12 @@ package com.example.javatest.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.Year;
 
 public record CarResponseDto(
         Long id,
         String brand,
-        Integer year,
+        Year year,
         String description,
         boolean sold,
         LocalDateTime created,

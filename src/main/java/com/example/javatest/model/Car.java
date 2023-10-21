@@ -9,6 +9,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.Year;
 
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
@@ -29,7 +30,7 @@ public class Car {
     private String brand;
 
     @Column(name = "fabrication_year", nullable = false)
-    private Integer year;
+    private Year year;
 
     @Column(name = "description", nullable = false)
     private String description;
