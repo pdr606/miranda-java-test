@@ -1,4 +1,4 @@
-package com.example.javatest.service;
+package com.example.javatest.service.car;
 
 import com.example.javatest.dto.CarUpdateDto;
 import com.example.javatest.dto.CarCreateDto;
@@ -21,7 +21,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class CarImp implements CarGetaway {
+public class CarServiceImp implements CarService {
 
     private final CarRepository carRepository;
 
@@ -32,21 +32,22 @@ public class CarImp implements CarGetaway {
     }
 
     @Override
-    public Page<Car> getAllCars(Pageable pageable) {
+    public Page<Car> getAllCarsPageable(Pageable pageable) {
         if (pageable.getPageSize() > 10) {
             pageable = PageRequest.of(pageable.getPageNumber(), 10, pageable.getSort());
         }
         return carRepository.findAll(pageable);
     }
 
+
     @Override
-    public Car getCarById(Long id) {
+    public Car getById(Long id) {
         return carRepository.findById(id).orElseThrow(()
         -> new CarNotFoundException(id));
     }
 
     @Override
-    public void registerCar(@Valid CarCreateDto data) {
+    public void save(@Valid CarCreateDto data) {
         try{
             carRepository.save(new Car(data));
         } catch (DataIntegrityViolationException ex){
@@ -56,15 +57,16 @@ public class CarImp implements CarGetaway {
 
 
     @Override
-    public Car updateCar(Long id, CarUpdateDto data) {
-            Car entity = getCarById(id);
+    public Car update(Long id, CarUpdateDto data) {
+            Car entity = getById(id);
             updateData(entity, data);
             return carRepository.save(entity);
     }
 
+
     @Override
-    public void deleteCar(Long id) {
-        if(getCarById(id) != null){
+    public void delete(Long id) {
+        if(getById(id) != null){
             carRepository.deleteById(id);
         }
     }

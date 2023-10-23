@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler(CarNotFoundException.class)
+    @ExceptionHandler({CarNotFoundException.class})
     public StandardError carNotFoundException(CarNotFoundException ex, HttpServletRequest request){
         String error = "Not found";
         HttpStatus status = HttpStatus.NOT_FOUND;
