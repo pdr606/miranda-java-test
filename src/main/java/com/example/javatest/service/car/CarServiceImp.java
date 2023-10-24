@@ -23,7 +23,6 @@ public class CarServiceImp implements CarService {
 
     private final CarRepository carRepository;
 
-
     @Override
     public Page<Car> getAllCarsPageable(Pageable pageable) {
         if (pageable.getPageSize() > 10) {

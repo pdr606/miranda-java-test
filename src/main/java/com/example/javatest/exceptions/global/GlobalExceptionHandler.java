@@ -31,8 +31,6 @@ public class GlobalExceptionHandler {
         return new StandardError(Instant.now(), status.value(), Collections.singletonList(error), ex.getMessage(), request.getRequestURI());
     }
 
-
-
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public StandardError handleValidationException(MethodArgumentNotValidException ex, HttpServletRequest request){
