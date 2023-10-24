@@ -4,6 +4,7 @@ import com.example.javatest.dto.CarCreateDto;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -36,6 +37,7 @@ public class Car {
     private String description;
 
     @Column(name = "sold", insertable = true)
+    @Value("false")
     private boolean sold;
 
     @CreatedDate
@@ -67,6 +69,5 @@ public class Car {
     @PrePersist
     private void setPersist(){
         this.created = LocalDateTime.now();
-        this.sold = false;
     }
 }
