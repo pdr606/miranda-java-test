@@ -10,9 +10,7 @@ import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -25,11 +23,6 @@ public class CarServiceImp implements CarService {
 
     private final CarRepository carRepository;
 
-    @Override
-    @Nullable
-    public List<Car> getByParams(String vehicle, String brand, BigDecimal price) {
-        return carRepository.findCarsByVehicleAndBrandAndPrice(vehicle, brand, price);
-    }
 
     @Override
     public Page<Car> getAllCarsPageable(Pageable pageable) {
@@ -37,6 +30,22 @@ public class CarServiceImp implements CarService {
             pageable = PageRequest.of(pageable.getPageNumber(), 10, pageable.getSort());
         }
         return carRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Car> getAllByParams(String vehicle, String brand, BigDecimal price) {
+        Car car = new Car();
+        car.setVehicle(vehicle);
+        car.setBrand(brand);
+        car.setPrice(price);
+
+        ExampleMatcher matcher = ExampleMatcher
+                .matchingAny()
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+
+        Example<Car> example = Example.of(car, matcher);
+        return carRepository.findAll(example);
     }
 
 

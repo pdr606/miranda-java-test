@@ -12,6 +12,6 @@ import java.util.List;
 
 public interface CarService extends CrudService<Car, CarCreateDto, CarUpdateDto> {
 
-    List<Car> getByParams(String vehicle, String brand, BigDecimal price);
     Page<Car> getAllCarsPageable(Pageable pageable);
+    List<Car> getAllByParams(String vehicle, String brand, BigDecimal price);
 }

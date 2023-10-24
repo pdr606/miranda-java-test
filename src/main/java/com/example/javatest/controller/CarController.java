@@ -27,20 +27,16 @@ public class CarController {
     @GetMapping
     @Cacheable("cars")
     @ResponseStatus(HttpStatus.OK)
-    public List<Car> findAllCars(@PageableDefault(
-                                direction = Sort.Direction.ASC,
-                                page = 0,
-                                size = 10
-                                )@Valid Pageable pageable){
+    public List<Car> findAllCars(@PageableDefault(direction = Sort.Direction.ASC, page = 0, size = 10)@Valid Pageable pageable){
         return carService.getAllCarsPageable(pageable).getContent();
     }
 
-    @GetMapping(value = "/")
+    @GetMapping(value = "/search")
     @ResponseStatus(HttpStatus.OK)
     public List<Car> findCarByParams(@RequestParam(value = "vehicle", required = false) String vehicle,
-                                               @RequestParam(value = "brand", required = false )String brand,
-                                               @RequestParam(value = "price", required = false)BigDecimal price) {
-        return carService.getByParams(vehicle, brand, price);
+                                     @RequestParam(value = "brand", required = false )String brand,
+                                     @RequestParam(value = "price", required = false)BigDecimal price) {
+        return carService.getAllByParams(vehicle, brand, price);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
