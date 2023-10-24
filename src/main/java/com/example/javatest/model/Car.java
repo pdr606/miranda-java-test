@@ -54,14 +54,6 @@ public class Car {
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
-    public Car(CarCreateDto data) {
-        this.vehicle = data.vehicle();
-        this.brand = data.brand();
-        this.year = data.year();
-        this.description = data.description();
-        this.chassis = data.chassis();
-        this.price = data.price();
-    }
     @PreUpdate
     private void setUpdated(){
         this.updated = LocalDateTime.now();
@@ -69,5 +61,14 @@ public class Car {
     @PrePersist
     private void setPersist(){
         this.created = LocalDateTime.now();
+    }
+
+    public Car(CarCreateDto data) {
+        this.vehicle = data.vehicle();
+        this.brand = data.brand();
+        this.year = data.year();
+        this.description = data.description();
+        this.chassis = data.chassis();
+        this.price = data.price();
     }
 }
