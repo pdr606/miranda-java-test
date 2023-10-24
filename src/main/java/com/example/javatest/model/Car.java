@@ -57,14 +57,16 @@ public class Car {
         this.brand = data.brand();
         this.year = data.year();
         this.description = data.description();
-        this.created = LocalDateTime.now();
-        this.updated = LocalDateTime.now();
         this.chassis = data.chassis();
         this.price = data.price();
-        this.sold = true;
     }
     @PreUpdate
     private void setUpdated(){
         this.updated = LocalDateTime.now();
+    }
+    @PrePersist
+    private void setPersist(){
+        this.created = LocalDateTime.now();
+        this.sold = false;
     }
 }
