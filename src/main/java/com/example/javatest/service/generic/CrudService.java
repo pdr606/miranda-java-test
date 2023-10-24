@@ -5,12 +5,12 @@ import java.util.List;
 
 public interface CrudService<T, C , U> {
 
-    void save(C createDto);
     T getById(Long id);
     T update (Long id, U updateDto);
+    void save(C createDto);
+    void delete(Long id);
+    void updateData(T entity, U updateDto);
     default List<T> getAll() {
         return Collections.emptyList();
     }
-    void delete(Long id);
-    void updateData(T entity, U updateDto);
 }
