@@ -32,10 +32,10 @@ public class CarController {
                                 page = 0,
                                 size = 10
                                 )@Valid Pageable pageable){
-        return carService.getAllCars(pageable).getContent();
+        return carService.getAllCarsPageable(pageable).getContent();
     }
 
-    @GetMapping(value = "/search")
+    @GetMapping(value = "/")
     @ResponseStatus(HttpStatus.OK)
     public List<Car> findCarByParams(@RequestParam(value = "vehicle", required = false) String vehicle,
                                                @RequestParam(value = "brand", required = false )String brand,
