@@ -1,6 +1,6 @@
 package com.example.javatest.mapper;
 
-import com.example.javatest.dto.CarResponseDto;
+import com.example.javatest.dto.car.CarResponseDto;
 import com.example.javatest.model.Car;
 
 public final class CarMapper {

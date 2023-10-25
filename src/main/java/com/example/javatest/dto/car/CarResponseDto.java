@@ -1,4 +1,4 @@
-package com.example.javatest.dto;
+package com.example.javatest.dto.car;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

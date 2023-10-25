@@ -1,17 +1,17 @@
 package com.example.javatest.service.car;
 
-import com.example.javatest.dto.CarUpdateDto;
-import com.example.javatest.dto.CarCreateDto;
+import com.example.javatest.dto.car.CarUpdateDto;
+import com.example.javatest.dto.car.CarCreateDto;
 import com.example.javatest.exceptions.CarDuplicateException;
 import com.example.javatest.exceptions.CarNotFoundException;
 import com.example.javatest.model.Car;
 import com.example.javatest.repository.CarRepository;
-import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -39,7 +39,7 @@ public class CarServiceImp implements CarService {
         car.setPrice(price);
 
         ExampleMatcher matcher = ExampleMatcher
-                .matchingAny()
+                .matchingAll()
                 .withIgnoreCase()
                 .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
 
@@ -47,15 +47,15 @@ public class CarServiceImp implements CarService {
         return carRepository.findAll(example);
     }
 
-
     @Override
-    public Car getById(Long id) {
+    public Car getCarById(Long id) {
         return carRepository.findById(id).orElseThrow(()
         -> new CarNotFoundException(id));
     }
 
     @Override
-    public void save(@Valid CarCreateDto data) {
+    @Transactional
+    public void saveCar(@Valid CarCreateDto data) {
         try{
             carRepository.save(new Car(data));
         } catch (DataIntegrityViolationException ex){
@@ -65,22 +65,22 @@ public class CarServiceImp implements CarService {
 
 
     @Override
-    public Car update(Long id, CarUpdateDto data) {
-            Car entity = getById(id);
-            updateData(entity, data);
+    public Car updateCar(Long id, CarUpdateDto data) {
+            Car entity = getCarById(id);
+            updateDataCar(entity, data);
             return carRepository.save(entity);
     }
 
 
     @Override
-    public void delete(Long id) {
-        if(getById(id) != null){
+    public void deleteCar(Long id) {
+        if(getCarById(id) != null){
             carRepository.deleteById(id);
         }
     }
 
     @Override
-    public void updateData(Car entity, CarUpdateDto data) {
+    public void updateDataCar(Car entity, CarUpdateDto data) {
         entity.setDescription(data.description());
         entity.setSold(data.sold());
         entity.setPrice(data.price());

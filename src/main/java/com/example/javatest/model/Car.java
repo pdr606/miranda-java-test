@@ -1,7 +1,9 @@
 package com.example.javatest.model;
 
-import com.example.javatest.dto.CarCreateDto;
+import com.example.javatest.dto.car.CarCreateDto;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,8 +16,10 @@ import java.time.Year;
 
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Entity
+@Builder
 @Table(name = "TB_CAR")
 public class Car {
 

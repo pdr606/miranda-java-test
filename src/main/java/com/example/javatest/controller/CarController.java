@@ -1,8 +1,8 @@
 package com.example.javatest.controller;
 
-import com.example.javatest.dto.CarCreateDto;
-import com.example.javatest.dto.CarResponseDto;
-import com.example.javatest.dto.CarUpdateDto;
+import com.example.javatest.dto.car.CarCreateDto;
+import com.example.javatest.dto.car.CarResponseDto;
+import com.example.javatest.dto.car.CarUpdateDto;
 import com.example.javatest.mapper.CarMapper;
 import com.example.javatest.model.Car;
 import com.example.javatest.service.car.CarService;
@@ -27,13 +27,13 @@ public class CarController {
     @GetMapping
     @Cacheable("cars")
     @ResponseStatus(HttpStatus.OK)
-    public List<Car> findAllCars(@PageableDefault(direction = Sort.Direction.ASC, page = 0, size = 10)@Valid Pageable pageable){
+    public List<Car> findAll(@PageableDefault(direction = Sort.Direction.ASC, page = 0, size = 10)@Valid Pageable pageable){
         return carService.getAllCarsPageable(pageable).getContent();
     }
 
     @GetMapping(value = "/search")
     @ResponseStatus(HttpStatus.OK)
-    public List<Car> findCarByParams(@RequestParam(value = "vehicle", required = false) String vehicle,
+    public List<Car> findByParams(@RequestParam(value = "vehicle", required = false) String vehicle,
                                      @RequestParam(value = "brand", required = false )String brand,
                                      @RequestParam(value = "price", required = false)BigDecimal price) {
         return carService.getAllByParams(vehicle, brand, price);
@@ -41,23 +41,23 @@ public class CarController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public void registerCar(@Valid @RequestBody CarCreateDto data){
-         carService.save(data);
+    public void save(@Valid @RequestBody CarCreateDto data){
+         carService.saveCar(data);
     }
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(value = "/{id}")
-    public CarResponseDto updateCar(@PathVariable Long id, @RequestBody CarUpdateDto data){
-        return CarMapper.toResponse(carService.update(id, data));
+    public CarResponseDto update(@PathVariable Long id, @RequestBody CarUpdateDto data){
+        return CarMapper.toResponse(carService.updateCar(id, data));
     }
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/{id}")
-    public CarResponseDto findCarById(@PathVariable Long id){
-        return CarMapper.toResponse(carService.getById(id));
+    public CarResponseDto findById(@PathVariable Long id){
+        return CarMapper.toResponse(carService.getCarById(id));
     }
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(value = "/{id}")
-    public void deleteCar(@PathVariable Long id){
-        carService.delete(id);
+    public void delete(@PathVariable Long id){
+        carService.deleteCar(id);
     }
 }
