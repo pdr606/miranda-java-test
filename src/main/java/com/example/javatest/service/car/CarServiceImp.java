@@ -54,15 +54,14 @@ public class CarServiceImp implements CarService {
     }
 
     @Override
-    @Transactional
     public void saveCar(@Valid CarCreateDto data) {
         try{
-            carRepository.save(new Car(data));
+            Car car = CarCreateDto.toEntity(data);
+            carRepository.save(car);
         } catch (DataIntegrityViolationException ex){
             throw new CarDuplicateException(data.chassis());
         }
     }
-
 
     @Override
     public Car updateCar(Long id, CarUpdateDto data) {
@@ -71,18 +70,23 @@ public class CarServiceImp implements CarService {
             return carRepository.save(entity);
     }
 
-
     @Override
     public void deleteCar(Long id) {
         if(getCarById(id) != null){
             carRepository.deleteById(id);
+            return;
         }
+        throw new CarNotFoundException(id);
     }
 
     @Override
     public void updateDataCar(Car entity, CarUpdateDto data) {
-        entity.setDescription(data.description());
+        if(data.description() != null){
+            entity.setDescription(data.description());
+        }
+        if(data.price() != null){
+            entity.setPrice(data.price());
+        }
         entity.setSold(data.sold());
-        entity.setPrice(data.price());
     }
 }

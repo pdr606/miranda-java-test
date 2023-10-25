@@ -19,29 +19,30 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/cars")
 @AllArgsConstructor
+@RequestMapping("/api/v1/cars")
 public class CarController {
 
     private final CarService carService;
+
     @GetMapping
     @Cacheable("cars")
     @ResponseStatus(HttpStatus.OK)
-    public List<Car> findAll(@PageableDefault(direction = Sort.Direction.ASC, page = 0, size = 10)@Valid Pageable pageable){
-        return carService.getAllCarsPageable(pageable).getContent();
+    public List<CarResponseDto> findAll(@PageableDefault(direction = Sort.Direction.ASC, page = 0, size = 10)@Valid Pageable pageable){
+        return CarMapper.toResponse(carService.getAllCarsPageable(pageable).getContent());
     }
 
-    @GetMapping(value = "/search")
+    @GetMapping(value = "/query")
     @ResponseStatus(HttpStatus.OK)
-    public List<Car> findByParams(@RequestParam(value = "vehicle", required = false) String vehicle,
+    public List<CarResponseDto> findByParams(@RequestParam(value = "vehicle", required = false) String vehicle,
                                      @RequestParam(value = "brand", required = false )String brand,
                                      @RequestParam(value = "price", required = false)BigDecimal price) {
-        return carService.getAllByParams(vehicle, brand, price);
+        return CarMapper.toResponse(carService.getAllByParams(vehicle, brand, price));
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public void save(@Valid @RequestBody CarCreateDto data){
+    public void save( @RequestBody CarCreateDto data){
          carService.saveCar(data);
     }
     @ResponseStatus(HttpStatus.OK)

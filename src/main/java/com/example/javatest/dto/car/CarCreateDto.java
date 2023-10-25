@@ -1,5 +1,6 @@
 package com.example.javatest.dto.car;
 
+import com.example.javatest.model.Car;
 import jakarta.validation.constraints.*;
 import lombok.Builder;
 
@@ -22,5 +23,10 @@ public record CarCreateDto(
                            @PositiveOrZero(message = "Price must be greater than zero")
                            BigDecimal price) {
 
+    public static Car toEntity(CarCreateDto dto){
+        return Car.builder().vehicle(dto.vehicle()).brand(dto.brand())
+                .year(dto.year()).description(dto.description())
+                .chassis(dto.chassis()).price(dto.price()).build();
+    }
 }
 

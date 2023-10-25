@@ -18,8 +18,8 @@ import java.time.Year;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Entity
 @Builder
+@Entity
 @Table(name = "TB_CAR")
 public class Car {
 
@@ -67,12 +67,4 @@ public class Car {
         this.created = LocalDateTime.now();
     }
 
-    public Car(CarCreateDto data) {
-        this.vehicle = data.vehicle();
-        this.brand = data.brand();
-        this.year = data.year();
-        this.description = data.description();
-        this.chassis = data.chassis();
-        this.price = data.price();
-    }
 }
