@@ -81,7 +81,7 @@ Para facilitar o entendimento do projeto, segue abaixo um json de exemplo para c
     "vehicle": "CORSA",
     "brand": "CHEVROLET",
     "year": 2009,
-    "description": "Carro extremamente econômico,
+    "description": "Carro extremamente econômico",
     "chassis": "5AKjBZwHE4tAV9830",
     "price": 220000
 }
