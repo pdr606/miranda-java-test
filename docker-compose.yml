@@ -1,0 +1,11 @@
+services:
+  app:
+    image: "java-test:latest"
+    container_name: java-test
+    build:
+      context: .
+    ports:
+      - '8080:8080'
+
+volumes:
+  volumes:
