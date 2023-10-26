@@ -3,6 +3,9 @@ package com.example.javatest.dto.car;
 import com.example.javatest.model.Car;
 import jakarta.validation.constraints.*;
 import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.Year;
