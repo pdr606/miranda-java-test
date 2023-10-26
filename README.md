@@ -59,17 +59,6 @@ docker-compose up -d
 
 *Ao atualizar um carro (PUT), os campos que não forem informados serão mantidos.*
 
-
-## Exemplos de requisições
-
-
-### Postman
-
-Para facilitar o teste dos endpoints, foi criado uma collection no Postman com todos os endpoints e exemplos de requisições.
-
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://www.postman.com/lively-resonance-591127/workspace/emprestimo-api/collection/19722349-38ae9e8a-c659-4caa-9be0-3d923a63320a?action=share&creator=19722349)
-
-
 ## Json de exemplo
 
 Para facilitar o entendimento do projeto, segue abaixo um json de exemplo para cada recurso.
