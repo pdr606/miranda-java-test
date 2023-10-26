@@ -52,7 +52,7 @@ docker-compose up -d
 |:------:|:------------------------:|:----------------------------------------------:|
 |  GET   | "/api/v1/cars"           | Retorna todos os carros de forma paginada      |
 |  GET   | "/api/v1/cars/{id}"      | Retorna o carro com o id informado             |
-|  GET   | "/api/v1/cars/search"    | Retorna os carros de acordo com a query string |
+|  GET   | "/api/v1/cars/query"     | Retorna os carros de acordo com a query string |
 |  POST  | "/api/v1/cars"           | Cadastra um novo carro                         |
 |  PUT   | "/api/v1/cars/{id}"      | Atualiza o carro com o id informado            |
 | DELETE | "/api/v1/cars/{id}"      | Deleta o carro com o id informado              |
