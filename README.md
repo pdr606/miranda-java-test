@@ -43,7 +43,7 @@ docker-compose up -d
 - Possuir o Maven instalado
 - Possuir o Docker instalado ( Opcional )
 - Uma IDE ou editor de sua preferência ( Opcional )
-- 
+  
 ## Endpoints
 
 ### Car
@@ -52,23 +52,12 @@ docker-compose up -d
 |:------:|:------------------------:|:----------------------------------------------:|
 |  GET   | "/api/v1/cars"           | Retorna todos os carros de forma paginada      |
 |  GET   | "/api/v1/cars/{id}"      | Retorna o carro com o id informado             |
-|  GET   | "/api/v1/cars/search"    | Retorna os carros de acordo com a query string |
+|  GET   | "/api/v1/cars/query"     | Retorna os carros de acordo com a query string |
 |  POST  | "/api/v1/cars"           | Cadastra um novo carro                         |
 |  PUT   | "/api/v1/cars/{id}"      | Atualiza o carro com o id informado            |
 | DELETE | "/api/v1/cars/{id}"      | Deleta o carro com o id informado              |
 
 *Ao atualizar um carro (PUT), os campos que não forem informados serão mantidos.*
-
-
-## Exemplos de requisições
-
-
-### Postman
-
-Para facilitar o teste dos endpoints, foi criado uma collection no Postman com todos os endpoints e exemplos de requisições.
-
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://www.postman.com/lively-resonance-591127/workspace/emprestimo-api/collection/19722349-38ae9e8a-c659-4caa-9be0-3d923a63320a?action=share&creator=19722349)
-
 
 ## Json de exemplo
 
