@@ -1,18 +1,15 @@
 package com.example.javatest.controller;
 
-import com.example.javatest.dto.car.CarCreateDto;
-import com.example.javatest.dto.car.CarResponseDto;
-import com.example.javatest.dto.car.CarUpdateDto;
-import com.example.javatest.mapper.CarMapper;
-import com.example.javatest.model.Car;
+import com.example.javatest.config.validations.CreateCarValidation;
+import com.example.javatest.dto.car.CarDto;
 import com.example.javatest.service.car.CarService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -26,39 +23,38 @@ public class CarController {
     private final CarService carService;
 
     @GetMapping
-    @Cacheable("cars")
     @ResponseStatus(HttpStatus.OK)
-    public List<CarResponseDto> findAll(@PageableDefault(direction = Sort.Direction.ASC, page = 0, size = 10)@Valid Pageable pageable){
-        return CarMapper.toResponse(carService.getAllCarsPageable(pageable).getContent());
+    public List<CarDto> findAll(@PageableDefault(direction = Sort.Direction.ASC, page = 0, size = 10)@Validated(CreateCarValidation.class) Pageable pageable){
+        return this.carService.getAllCarsPageable(pageable);
     }
 
     @GetMapping(value = "/query")
     @ResponseStatus(HttpStatus.OK)
-    public List<CarResponseDto> findByParams(@RequestParam(value = "vehicle", required = false) String vehicle,
+    public List<CarDto> findByParams(@RequestParam(value = "vehicle", required = false) String vehicle,
                                      @RequestParam(value = "brand", required = false )String brand,
                                      @RequestParam(value = "price", required = false)BigDecimal price) {
-        return CarMapper.toResponse(carService.getAllByParams(vehicle, brand, price));
+        return this.carService.getAllByParams(vehicle, brand, price);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public void save( @RequestBody CarCreateDto data){
-         carService.saveCar(data);
+    public void save( @RequestBody @Validated CarDto dto){
+         this.carService.saveCar(dto);
     }
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(value = "/{id}")
-    public CarResponseDto update(@PathVariable Long id, @RequestBody CarUpdateDto data){
-        return CarMapper.toResponse(carService.updateCar(id, data));
+    public CarDto update(@PathVariable Long id, @RequestBody @Validated CarDto dto){
+        return this.carService.updateCar(id, dto);
     }
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/{id}")
-    public CarResponseDto findById(@PathVariable Long id){
-        return CarMapper.toResponse(carService.getCarById(id));
+    public CarDto findById(@PathVariable Long id){
+        return this.carService.getCarById(id);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(value = "/{id}")
     public void delete(@PathVariable Long id){
-        carService.deleteCar(id);
+        this.carService.deleteCar(id);
     }
 }

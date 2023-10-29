@@ -1,6 +1,5 @@
 package com.example.javatest.model;
 
-import com.example.javatest.dto.car.CarCreateDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
