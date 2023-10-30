@@ -7,10 +7,10 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", nullValueMapMappingStrategy = NullValueMappingStrategy.RETURN_DEFAULT)
+@Mapper(componentModel = "spring", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
 public interface CarMapper {
     CarMapper INSTANCE = Mappers.getMapper(CarMapper.class);
-
+    void updateCarFromDto(CarDto dto, @MappingTarget Car car);
     @Mapping(target = "id", source = "id")
     List<CarDto> toDtoList(List<Car> list);
 }

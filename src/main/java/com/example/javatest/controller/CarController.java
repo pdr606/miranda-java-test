@@ -24,37 +24,40 @@ public class CarController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<CarDto> findAll(@PageableDefault(direction = Sort.Direction.ASC, page = 0, size = 10)@Validated(CreateCarValidation.class) Pageable pageable){
+    public List<CarDto> findAll(
+            @PageableDefault(direction = Sort.Direction.ASC, page = 0, size = 10)
+            @Validated(CreateCarValidation.class) Pageable pageable){
         return this.carService.getAllCarsPageable(pageable);
     }
 
     @GetMapping(value = "/query")
     @ResponseStatus(HttpStatus.OK)
-    public List<CarDto> findByParams(@RequestParam(value = "vehicle", required = false) String vehicle,
-                                     @RequestParam(value = "brand", required = false )String brand,
-                                     @RequestParam(value = "price", required = false)BigDecimal price) {
+    public List<CarDto> findByParams(
+            @RequestParam(value = "vehicle", required = false) String vehicle,
+            @RequestParam(value = "brand", required = false )String brand,
+            @RequestParam(value = "price", required = false)BigDecimal price) {
         return this.carService.getAllByParams(vehicle, brand, price);
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public void save( @RequestBody @Validated CarDto dto){
-         this.carService.saveCar(dto);
+    public void save( @RequestBody @Validated(value = CreateCarValidation.class) CarDto dto){
+         this.carService.save(dto);
     }
     @ResponseStatus(HttpStatus.OK)
     @PutMapping(value = "/{id}")
     public CarDto update(@PathVariable Long id, @RequestBody @Validated CarDto dto){
-        return this.carService.updateCar(id, dto);
+        return this.carService.update(id, dto);
     }
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(value = "/{id}")
     public CarDto findById(@PathVariable Long id){
-        return this.carService.getCarById(id);
+        return this.carService.getById(id);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping(value = "/{id}")
     public void delete(@PathVariable Long id){
-        this.carService.deleteCar(id);
+        this.carService.delete(id);
     }
 }

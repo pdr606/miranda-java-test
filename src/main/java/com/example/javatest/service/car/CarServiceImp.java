@@ -49,13 +49,13 @@ public class CarServiceImp implements CarService {
     }
 
     @Override
-    public CarDto getCarById(Long id) {
+    public CarDto getById(Long id) {
         return carRepository.findById(id).map(CarDto::toDto) .orElseThrow(()
         -> new CarNotFoundException(id));
     }
 
     @Override
-    public void saveCar(@Valid CarDto dto) {
+    public void save(@Valid CarDto dto) {
         try{
             Car car = CarDto.toEntity(dto);
             carRepository.save(car);
@@ -65,7 +65,7 @@ public class CarServiceImp implements CarService {
     }
 
     @Override
-    public CarDto updateCar(Long id, CarDto dto) {
+    public CarDto update(Long id, CarDto dto) {
             try{
                 Car entity = carRepository.getReferenceById(id);
 
@@ -73,7 +73,7 @@ public class CarServiceImp implements CarService {
                     throw new CarDuplicateException(dto.chassis());
                 }
 
-                updateDataCar(entity, dto);
+                carMapper.updateCarFromDto(dto, entity);
 
                 return CarDto.toDto(carRepository.save(entity));
             } catch (EntityNotFoundException ex){
@@ -82,25 +82,11 @@ public class CarServiceImp implements CarService {
     }
 
     @Override
-    public void deleteCar(Long id) {
-        if(getCarById(id) != null){
+    public void delete(Long id) {
+        if(getById(id) != null){
             carRepository.deleteById(id);
             return;
         }
         throw new CarNotFoundException(id);
-    }
-
-    @Override
-    public void updateDataCar(Car entity, CarDto dto) {
-        if(dto.description() != null){
-            entity.setDescription(dto.description());
-        }
-        if(dto.price() != null){
-            entity.setPrice(dto.price());
-        }
-        if(dto.price() != null){
-            entity.setChassis(dto.chassis());
-        }
-        entity.setSold(dto.sold());
     }
 }
