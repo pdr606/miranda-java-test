@@ -37,7 +37,7 @@ public class CarServiceImp implements CarService {
         CarEntity carEntity = new CarEntity();
         carEntity.setVehicle(vehicle);
         carEntity.setBrand(brand);
-        carEntity.setPrice(price);
+        carEntity.getSalesInfo().setPrice(price);
 
         ExampleMatcher matcher = ExampleMatcher
                 .matchingAll()

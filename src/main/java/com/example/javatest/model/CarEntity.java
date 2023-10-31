@@ -36,22 +36,18 @@ public class CarEntity {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "sold", insertable = true)
-    @Value("false")
-    private boolean sold;
-
     @Column(name = "chassis", unique = true, nullable = false)
     private String chassis;
 
-    @Column(name = "price", nullable = false)
-    private BigDecimal price;
+    @Embedded
+    private CreateAndUpdateEntity dateTime;
 
     @Embedded
-    private CreateAndUpdateEntity createAndUpdate;
+    private PriceSalesEntity salesInfo;
 
     @PrePersist
     private void initializeCreateAndUpdate() {
-        this.createAndUpdate = new CreateAndUpdateEntity();
+        this.dateTime = new CreateAndUpdateEntity();
     }
 
 }

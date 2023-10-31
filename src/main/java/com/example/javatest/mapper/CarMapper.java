@@ -14,7 +14,6 @@ public interface CarMapper {
     void updateCarFromDto(CarDto dto, @MappingTarget CarEntity carEntity);
 
     @Mapping(source = "id", target = "id")
-    @Mapping(source = "createAndUpdate.updated", target = "createAndUpdate.update")
-    @Mapping(source = "createAndUpdate.created", target = "createAndUpdate.created")
     List<CarDto> toDtoList(List<CarEntity> list);
 }
+
