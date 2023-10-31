@@ -17,7 +17,7 @@ import java.time.Year;
 @Builder
 @Entity
 @Table(name = "TB_CAR")
-public class Car {
+public class CarEntity {
 
     @Id
     @Column(name = "id")
@@ -47,11 +47,11 @@ public class Car {
     private BigDecimal price;
 
     @Embedded
-    private CreateAndUpdate createAndUpdate;
+    private CreateAndUpdateEntity createAndUpdate;
 
     @PrePersist
     private void initializeCreateAndUpdate() {
-        this.createAndUpdate = new CreateAndUpdate();
+        this.createAndUpdate = new CreateAndUpdateEntity();
     }
 
 }

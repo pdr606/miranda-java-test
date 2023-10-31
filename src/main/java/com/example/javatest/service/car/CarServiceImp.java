@@ -4,7 +4,7 @@ import com.example.javatest.dto.car.CarDto;
 import com.example.javatest.exceptions.CarDuplicateException;
 import com.example.javatest.exceptions.CarNotFoundException;
 import com.example.javatest.mapper.CarMapper;
-import com.example.javatest.model.Car;
+import com.example.javatest.model.CarEntity;
 import com.example.javatest.repository.CarRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -34,17 +34,17 @@ public class CarServiceImp implements CarService {
 
     @Override
     public List<CarDto> getAllByParams(String vehicle, String brand, BigDecimal price) {
-        Car car = new Car();
-        car.setVehicle(vehicle);
-        car.setBrand(brand);
-        car.setPrice(price);
+        CarEntity carEntity = new CarEntity();
+        carEntity.setVehicle(vehicle);
+        carEntity.setBrand(brand);
+        carEntity.setPrice(price);
 
         ExampleMatcher matcher = ExampleMatcher
                 .matchingAll()
                 .withIgnoreCase()
                 .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
 
-        Example<Car> example = Example.of(car, matcher);
+        Example<CarEntity> example = Example.of(carEntity, matcher);
         return carMapper.INSTANCE.toDtoList(carRepository.findAll(example));
     }
 
@@ -57,8 +57,8 @@ public class CarServiceImp implements CarService {
     @Override
     public void save(@Valid CarDto dto) {
         try{
-            Car car = CarDto.toEntity(dto);
-            carRepository.save(car);
+            CarEntity carEntity = CarDto.toEntity(dto);
+            carRepository.save(carEntity);
         } catch (DataIntegrityViolationException ex){
             throw new CarDuplicateException(dto.chassis());
         }
@@ -67,7 +67,7 @@ public class CarServiceImp implements CarService {
     @Override
     public CarDto update(Long id, CarDto dto) {
             try{
-                Car entity = carRepository.getReferenceById(id);
+                CarEntity entity = carRepository.getReferenceById(id);
 
                 if(entity.getChassis().equals(dto.chassis())){
                     throw new CarDuplicateException(dto.chassis());

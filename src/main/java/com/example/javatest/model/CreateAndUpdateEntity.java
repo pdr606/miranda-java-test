@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @lombok.Data
 @NoArgsConstructor
 @Builder
-public class CreateAndUpdate {
+public class CreateAndUpdateEntity {
 
     @CreatedDate
     @Column(name = "created_at")

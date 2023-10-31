@@ -85,6 +85,6 @@ O banco de dados utilizado foi o H2, que é um banco de dados em memória. Para 
 |    Campo     |         Valor          |
 |:------------:|:----------------------:|
 | Driver Class |     org.h2.Driver      |
-|   JDBC URL   |     jdbc:h2:mem:car    |   
+|   JDBC URL   |     jdbc:h2:mem:carEntity    |   
 |  User Name   |           sa           |
 |   Password   |      {em branco}       |

@@ -1,7 +1,7 @@
 package com.example.javatest.mapper;
 
 import com.example.javatest.dto.car.CarDto;
-import com.example.javatest.model.Car;
+import com.example.javatest.model.CarEntity;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
@@ -11,7 +11,10 @@ import java.util.List;
 public interface CarMapper {
     CarMapper INSTANCE = Mappers.getMapper(CarMapper.class);
 
-    void updateCarFromDto(CarDto dto, @MappingTarget Car car);
+    void updateCarFromDto(CarDto dto, @MappingTarget CarEntity carEntity);
 
-    List<CarDto> toDtoList(List<Car> list);
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "createAndUpdate.updated", target = "createAndUpdate.update")
+    @Mapping(source = "createAndUpdate.created", target = "createAndUpdate.created")
+    List<CarDto> toDtoList(List<CarEntity> list);
 }

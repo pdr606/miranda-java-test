@@ -1,8 +1,8 @@
 package com.example.javatest.dto.car;
 
 import com.example.javatest.config.validations.CreateCarValidation;
-import com.example.javatest.model.Car;
-import com.example.javatest.model.CreateAndUpdate;
+import com.example.javatest.model.CarEntity;
+import com.example.javatest.model.CreateAndUpdateEntity;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.*;
 import lombok.Builder;
@@ -38,21 +38,21 @@ public record CarDto(
         BigDecimal price,
 
         @JsonInclude(JsonInclude.Include.NON_NULL)
-        CreateAndUpdate createAndUpdate
+        CreateAndUpdateEntity createAndUpdate
 
         ) {
 
-    public static Car toEntity(CarDto dto){
-        return Car.builder().vehicle(dto.vehicle()).brand(dto.brand())
+    public static CarEntity toEntity(CarDto dto){
+        return CarEntity.builder().vehicle(dto.vehicle()).brand(dto.brand())
                 .year(dto.year()).description(dto.description())
                 .chassis(dto.chassis()).price(dto.price()).build();
     }
 
-    public static CarDto toDto(Car entity){
+    public static CarDto toDto(CarEntity entity){
         return CarDto.builder().id(entity.getId()).vehicle(entity.getVehicle()).brand(entity.getBrand())
                 .year(entity.getYear()).description(entity.getDescription())
                 .chassis(entity.getChassis()).price(entity.getPrice())
-                .createAndUpdate(new CreateAndUpdate(entity.getCreateAndUpdate().getCreated(), entity.getCreateAndUpdate().getUpdated())).build();
+                .createAndUpdate(new CreateAndUpdateEntity(entity.getCreateAndUpdate().getCreated(), entity.getCreateAndUpdate().getUpdated())).build();
     }
 }
 

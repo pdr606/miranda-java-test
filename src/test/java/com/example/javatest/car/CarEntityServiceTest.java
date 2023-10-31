@@ -26,7 +26,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @SpringBootTest(properties = "spring.main.banner-mode=off")
 @AutoConfigureDataJpa
 @AutoConfigureTestDatabase
- class CarServiceTest {
+ class CarEntityServiceTest {
 
     @Autowired
    private CarServiceImp carService;
@@ -42,7 +42,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
                         .description("Good Car").chassis("83HN38FHF38HF3")
                         .price(new BigDecimal("220000")).build();
 
-        carService.saveCar(carDto);
+        carService.save(carDto);
     }
 
 
@@ -55,9 +55,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
                 .description("Good Car").chassis("83HN38FHF38HF3")
                 .price(new BigDecimal("220000")).build();
 
-        carService.saveCar(carDto);
+        carService.save(carDto);
 
-        CarDto car = carService.getCarById(1L);
+        CarDto car = carService.getById(1L);
 
         assertThat(car.id()).isNotNull();
         assertThat(car.vehicle()).isEqualTo("Corsa");
@@ -77,9 +77,9 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
                 .description("Good Car").chassis("83HN38FHF38HF3")
                 .price(new BigDecimal("220000")).build();
 
-        carService.saveCar(carDto);
+        carService.save(carDto);
 
-        CarDto carEntity = carService.updateCar(1L, carDto);
+        CarDto carEntity = carService.update(1L, carDto);
 
         assertThat(carEntity.description()).isEqualTo(carDto.description());
     }
