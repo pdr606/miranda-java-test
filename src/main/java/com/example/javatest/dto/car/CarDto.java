@@ -2,12 +2,13 @@ package com.example.javatest.dto.car;
 
 import com.example.javatest.config.validations.CreateCarValidation;
 import com.example.javatest.model.Car;
+import com.example.javatest.model.CreateAndUpdate;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
 import lombok.Builder;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.Year;
 
 @Builder
@@ -36,10 +37,9 @@ public record CarDto(
         @PositiveOrZero(message = "Price must be greater than zero", groups = CreateCarValidation.class)
         @JsonInclude(JsonInclude.Include.NON_NULL)
         BigDecimal price,
+
         @JsonInclude(JsonInclude.Include.NON_NULL)
-        LocalDateTime created,
-        @JsonInclude(JsonInclude.Include.NON_NULL)
-        LocalDateTime updated
+        CreateAndUpdate createAndUpdate
 
         ) {
 
@@ -53,8 +53,7 @@ public record CarDto(
         return CarDto.builder().id(entity.getId()).vehicle(entity.getVehicle()).brand(entity.getBrand())
                 .year(entity.getYear()).description(entity.getDescription())
                 .chassis(entity.getChassis()).price(entity.getPrice())
-                .created(entity.getCreated()).updated(entity.getCreated())
-                .build();
+                .createAndUpdate(new CreateAndUpdate(entity.getCreateAndUpdate().getCreated(), entity.getCreateAndUpdate().getUpdated())).build();
     }
 }
 

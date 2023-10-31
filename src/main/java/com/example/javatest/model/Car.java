@@ -6,11 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.Year;
 
 @EntityListeners(AuditingEntityListener.class)
@@ -43,27 +40,18 @@ public class Car {
     @Value("false")
     private boolean sold;
 
-    @CreatedDate
-    @Column(name = "created_at")
-    private LocalDateTime created;
-
-    @LastModifiedDate
-    @Column(name = "updated_at")
-    private LocalDateTime updated;
-
     @Column(name = "chassis", unique = true, nullable = false)
     private String chassis;
 
     @Column(name = "price", nullable = false)
     private BigDecimal price;
 
-    @PreUpdate
-    private void setUpdated(){
-        this.updated = LocalDateTime.now();
-    }
+    @Embedded
+    private CreateAndUpdate createAndUpdate;
+
     @PrePersist
-    private void setPersist(){
-        this.created = LocalDateTime.now();
+    private void initializeCreateAndUpdate() {
+        this.createAndUpdate = new CreateAndUpdate();
     }
 
 }
